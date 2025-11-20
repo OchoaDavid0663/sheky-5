@@ -1,0 +1,54 @@
+{% extends "colormania/base.html" %}
+{% load static %}
+
+{% block title %}Selladores - COLORMANIA{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="text-center mb-5">
+        <h1 class="brydan display-1" style="color: #ffae00; text-shadow: 4px 4px 8px rgba(0,0,0,0.4);">
+            <i class="fas fa-fill-drip me-3"></i> SELLADORES Y BARNICES
+        </h1>
+        <p class="lead bobby fs-3" style="color: #131128;">
+            Protege tu obra maestra con el acabado perfecto
+        </p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for producto in productos %}
+        <div class="col">
+            <div class="card h-100 shadow-lg border-0 overflow-hidden transform-hover"
+                 style="border-radius: 25px;">
+                <a href="#" class="text-decoration-none">
+                    {% if producto.foto_sellador %}
+                        <img src="{{ sellador.foto_sellador.url }}" class="card-img-top" style="height: 280px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 280px;">
+                            <h1 class="display-1 text-muted">🛡️</h1>
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body text-center p-4">
+                        <h5 class="bobby mb-2" style="color: #131128;">{{ sellador.nombre }}</h5>
+                        <p class="text-muted small mb-3">{{ sellador.descripcion|truncatewords:12 }}</p>
+                        <p class="fw-bold fs-3" style="color: #ffae00;">${{ sellador.precio }}</p>
+                        <p class="text-success">
+                            {% if producto.stock > 0 %}
+                                <i class="fas fa-check-circle"></i> {{ sellador.stock }} en stock
+                            {% else %}
+                                <i class="fas fa-times-circle text-danger"></i> Agotado
+                            {% endif %}
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <i class="fas fa-shield-alt fa-5x text-muted mb-4"></i>
+            <h3 class="text-muted bobby">Pronto tendremos selladores increíbles...</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

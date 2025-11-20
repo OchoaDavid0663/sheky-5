@@ -1,0 +1,54 @@
+{% extends "colormania/base.html" %}
+{% load static %}
+
+{% block title %}Productos y Accesorios - COLORMANIA{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="text-center mb-5">
+        <h1 class="brydan display-1" style="color: #64c1ff; text-shadow: 4px 4px 8px rgba(0,0,0,0.4);">
+            <i class="fas fa-spray-can me-3"></i> PRODUCTOS Y ACCESORIOS
+        </h1>
+        <p class="lead bobby fs-3" style="color: #131128;">
+            Todo lo que necesitas para crear sin límites
+        </p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for producto in productos %}
+        <div class="col">
+            <div class="card h-100 shadow-lg border-0 overflow-hidden transform-hover"
+                 style="border-radius: 25px;">
+                <a href="#" class="text-decoration-none">
+                    {% if producto.foto_producto %}
+                        <img src="{{ producto.foto_producto.url }}" class="card-img-top" style="height: 280px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 280px;">
+                            <h1 class="display-1 text-muted">🛠️</h1>
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body text-center p-4">
+                        <h5 class="bobby mb-2" style="color: #131128;">{{ producto.nombre }}</h5>
+                        <p class="text-muted small mb-3">{{ producto.descripcion|truncatewords:12 }}</p>
+                        <p class="fw-bold fs-3" style="color: #64c1ff;">${{ producto.precio }}</p>
+                        <p class="text-success">
+                            {% if producto.stock > 0 %}
+                                <i class="fas fa-check-circle"></i> {{ producto.stock }} disponibles
+                            {% else %}
+                                <i class="fas fa-times-circle text-danger"></i> Agotado
+                            {% endif %}
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <i class="fas fa-tools fa-5x text-muted mb-4"></i>
+            <h3 class="text-muted bobby">Pronto tendremos más herramientas para ti...</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
